@@ -1,4 +1,4 @@
-name: Build and Deploy Backend to Azure
+name: Multi-Job Build and Deploy Backend
 
 on:
   push:
@@ -10,7 +10,38 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build-and-test:
+    name: 🏗️ Build and Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './backend/package-lock.json'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Prisma Generate
+        run: npx prisma generate
+
+      - name: Run Build
+        run: npm run build
+
+      - name: Run Tests
+        run: npm test
+
+  dockerize:
+    name: 🐳 Dockerize and Push
+    needs: build-and-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
@@ -28,3 +59,15 @@ jobs:
           docker build -t ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/game2shape-backend:${{ github.sha }} -t ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/game2shape-backend:latest ./backend
           docker push ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/game2shape-backend:${{ github.sha }}
           docker push ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/game2shape-backend:latest
+
+  deploy:
+    name: 🚀 Deploy to Azure
+    needs: dockerize
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'WebService-Cloud'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: '${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/game2shape-backend:latest'
