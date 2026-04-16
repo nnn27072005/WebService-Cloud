@@ -25,7 +25,7 @@ async function bootstrap() {
   // 4. Global Logging Interceptor
   app.useGlobalInterceptors(new LoggingInterceptor());
 
-  // 5. Swagger Documentation
+  // 5.Swagger Documentation
   const config = new DocumentBuilder()
     .setTitle('GameTwoShape API')
     .setDescription('Backend for GameTwoShape (L02-CockRoaches)')
