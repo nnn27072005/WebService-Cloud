@@ -1,0 +1,11 @@
+node_modules
+dist
+.env
+.git
+.github
+Dockerfile
+# Ignore development logs
+*.log
+# OS files
+.DS_Store
+Thumbs.db

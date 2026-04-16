@@ -39,6 +39,7 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
   const nodeEnv = process.env.NODE_ENV || 'development';
   await app.listen(port, '0.0.0.0');
+  console.log("👉 Đang kết nối tới DB: ", process.env.DATABASE_URL);
   console.log(`🚀 [${nodeEnv.toUpperCase()}] Application is running on: http://0.0.0.0:${port}/api`);
 }
 bootstrap();
