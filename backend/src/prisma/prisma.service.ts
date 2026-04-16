@@ -8,7 +8,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   async onModuleInit() {
     const dbUrl = process.env.DATABASE_URL;
     if (dbUrl) {
-      // Extract hostname and DB name for logging (masking credentials for security)
       const host = dbUrl.split('@')[1]?.split('/')[0] || 'Unknown Host';
       const dbName = dbUrl.split('/').pop()?.split('?')[0] || 'Unknown DB';
       this.logger.log(`🔌 Attempting to connect to database: ${host} / ${dbName}`);
