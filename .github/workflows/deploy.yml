@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ WebService-Cloud, main ]
+    branches: [ main ]
   pull_request:
-    branches: [ WebService-Cloud, main ]
+    branches: [ main ]
 
 jobs:
   build-and-test:

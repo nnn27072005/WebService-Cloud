@@ -1,6 +1,6 @@
 # File-Based Routing (Expo Router)
 
-Expo Router sử dụng cơ chế file-based routing, trong đó cấu trúc folder `app/` sẽ quy định cách routing.
+Expo Router sử dụng cơ chế file-based routing, trong đó cấu trúc folder `app/` sẽ quy định cách routing
 
 1. Root url (`/`) nằm ở file `app/index.tsx`.
 2. `_layout.tsx` là file được load đầu tiên. File này có thể nằm ở `app/` hoặc ở một route group. Vì file này được load trước, nên các thao tác khởi tạo thường được thực hiện trên file này, ví dụ như tải font chữ, thiết lập themes, tương tác với splash screen,...
