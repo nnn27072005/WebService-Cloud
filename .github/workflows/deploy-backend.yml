@@ -1,4 +1,4 @@
-name: Multi-Job Build and Deploy Backend
+name: WebService-Cloud
 
 on:
   push:
