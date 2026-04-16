@@ -22,10 +22,4 @@ export class HealthController {
       () => this.prisma.pingCheck('database', this.prismaService),
     ]);
   }
-
-  @Get('debug-sentry')
-  @ApiOperation({ summary: 'Trigger a test error for Sentry' })
-  debugSentry() {
-    throw new Error('Sentry Test Error: ' + new Date().toISOString());
-  }
 }
